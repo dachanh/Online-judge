@@ -9,6 +9,58 @@ import (
 	"context"
 )
 
+const deleteUser = `-- name: DeleteUser :one
+UPDATE public."User" as u
+SET u."status" = "deleted"
+WHERE u."ID" = $1
+RETURNING "ID", first_name, last_name, email, username, birthday, height, status, gender, password, created_at, updated_at
+`
+
+func (q *Queries) DeleteUser(ctx context.Context, id int32) (User, error) {
+	row := q.db.QueryRowContext(ctx, deleteUser, id)
+	var i User
+	err := row.Scan(
+		&i.ID,
+		&i.FirstName,
+		&i.LastName,
+		&i.Email,
+		&i.Username,
+		&i.Birthday,
+		&i.Height,
+		&i.Status,
+		&i.Gender,
+		&i.Password,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
+const getAccount = `-- name: GetAccount :one
+SELECT "ID", first_name, last_name, email, username, birthday, height, status, gender, password, created_at, updated_at FROM public."User" as u
+WHERE u."ID" = $1
+`
+
+func (q *Queries) GetAccount(ctx context.Context, id int32) (User, error) {
+	row := q.db.QueryRowContext(ctx, getAccount, id)
+	var i User
+	err := row.Scan(
+		&i.ID,
+		&i.FirstName,
+		&i.LastName,
+		&i.Email,
+		&i.Username,
+		&i.Birthday,
+		&i.Height,
+		&i.Status,
+		&i.Gender,
+		&i.Password,
+		&i.CreatedAt,
+		&i.UpdatedAt,
+	)
+	return i, err
+}
+
 const loginAccount = `-- name: LoginAccount :one
 SELECT "ID", first_name, last_name, email, username, birthday, height, status, gender, password, created_at, updated_at
 FROM public."User" as u

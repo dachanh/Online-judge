@@ -9,6 +9,8 @@ import (
 )
 
 type Querier interface {
+	DeleteUser(ctx context.Context, id int32) (User, error)
+	GetAccount(ctx context.Context, id int32) (User, error)
 	LoginAccount(ctx context.Context, arg LoginAccountParams) (User, error)
 }
 
