@@ -12,3 +12,4 @@ RETURNING *;
 -- name: GetAccount :one
 SELECT * FROM public."User" as u
 WHERE u."ID" = $1; 
+

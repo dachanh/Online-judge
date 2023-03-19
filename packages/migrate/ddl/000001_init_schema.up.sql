@@ -8,5 +8,7 @@ CREATE TABLE "User" (
   "height" FLOAT8 NOT NULL,
   "status"  VARCHAR(50) DEFAULT "activate",
   "gender" bool DEFAULT true,
-  "password" VARCHAR(255) NOT NULL
+  "password" VARCHAR(255) NOT NULL,
+  "created_at" timestamptz NOT NULL DEFAULT (now()),
+  "updated_at" timestamptz NOT NULL DEFAULT (now())
 );

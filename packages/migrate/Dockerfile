@@ -9,3 +9,4 @@ RUN apk add -q --update \
     && rm -rf /var/cache/apk/*
 
 ENV ROOT /packages/migrate
+
